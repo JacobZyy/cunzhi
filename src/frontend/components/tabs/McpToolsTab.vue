@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { invoke } from '@tauri-apps/api/core'
 import { useMessage } from 'naive-ui'
+import { toolSearch } from 'virtual:vocabulary'
 import { onMounted, ref, watch } from 'vue'
 import { useMcpToolsReactive } from '../../composables/useMcpTools'
 
@@ -196,7 +197,7 @@ async function openToolConfig(toolId: string) {
   currentToolId.value = toolId
 
   // 如果是代码搜索工具，加载当前配置
-  if (toolId === 'sou') {
+  if (toolId === toolSearch.id) {
     await loadAcemcpConfig()
   }
 
@@ -280,7 +281,7 @@ async function saveAcemcpConfig() {
 
 // 保存当前工具配置
 async function saveCurrentToolConfig() {
-  if (currentToolId.value === 'sou') {
+  if (currentToolId.value === toolSearch.id) {
     await saveAcemcpConfig()
   }
   // 未来可以添加其他工具的保存逻辑
@@ -492,7 +493,7 @@ watch(() => acemcpConfig.value.text_extensions, (list) => {
       :title="`${getCurrentToolName()} 工具配置`" style="width: 800px" :bordered="false" size="huge"
     >
       <!-- 代码搜索工具配置 -->
-      <div v-if="currentToolId === 'sou'">
+      <div v-if="currentToolId === toolSearch.id">
         <n-tabs type="line" animated>
           <!-- 基础配置标签页 -->
           <n-tab-pane name="basic" tab="基础配置">
@@ -668,7 +669,7 @@ watch(() => acemcpConfig.value.text_extensions, (list) => {
           <n-button @click="showToolConfigModal = false">
             取消
           </n-button>
-          <n-button v-if="currentToolId === 'sou'" type="primary" @click="saveCurrentToolConfig">
+          <n-button v-if="currentToolId === toolSearch.id" type="primary" @click="saveCurrentToolConfig">
             保存配置
           </n-button>
         </n-space>

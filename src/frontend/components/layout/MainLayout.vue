@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { invoke } from '@tauri-apps/api/core'
 import { useMessage } from 'naive-ui'
+import { appName } from 'virtual:vocabulary'
 import { ref } from 'vue'
 import IntroTab from '../tabs/IntroTab.vue'
 import McpToolsTab from '../tabs/McpToolsTab.vue'
@@ -100,12 +101,12 @@ function testPopup() {
           <div class="flex items-center justify-center gap-3 mb-3" data-guide="app-logo">
             <img
               src="/icons/icon-128.png"
-              alt="寸止 Logo"
+              :alt="`${appName} Logo`"
               class="w-10 h-10 rounded-xl shadow-lg"
               @error="handleImageError"
             >
             <h1 class="text-4xl font-medium text-white">
-              寸止
+              {{ appName }}
             </h1>
             <!-- 测试按钮 -->
             <n-button

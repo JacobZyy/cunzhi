@@ -2,9 +2,11 @@ import process from 'node:process'
 import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
+import { vocabularyPlugin } from './vite-plugin-vocabulary'
 
 export default defineConfig({
   plugins: [
+    vocabularyPlugin(),
     vue(),
     UnoCSS(),
   ],

@@ -17,6 +17,7 @@ use encoding_rs::{GBK, WINDOWS_1252, UTF_8};
 use globset::{Glob, GlobSet, GlobSetBuilder};
 
 use super::types::{AcemcpRequest, AcemcpConfig};
+use crate::constants::vocabulary;
 use crate::log_debug;
 use crate::log_important;
 
@@ -84,8 +85,8 @@ impl AcemcpTool {
 
         if let serde_json::Value::Object(schema_map) = schema {
             Tool {
-                name: Cow::Borrowed("sou"),
-                description: Some(Cow::Borrowed("基于查询在特定项目中搜索相关的代码上下文。此工具在搜索前自动执行增量索引，确保结果始终是最新的。返回代码库中与查询语义相关的格式化文本片段。")),
+                name: Cow::Owned(vocabulary::TOOL_ID_SEARCH.to_string()),
+                description: Some(Cow::Owned(vocabulary::TOOL_DESC_SEARCH.to_string())),
                 input_schema: Arc::new(schema_map),
                 annotations: None,
             }

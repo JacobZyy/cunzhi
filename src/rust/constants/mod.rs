@@ -10,6 +10,7 @@ pub mod telegram;
 pub mod theme;
 pub mod ui;
 pub mod validation;
+pub mod vocabulary;
 pub mod window;
 
 // 重新导出所有常量，方便使用

@@ -1,13 +1,16 @@
 // 应用程序相关常量
+// 核心词汇从 vocabulary.toml 配置文件生成
+
+use super::vocabulary;
 
 /// 应用程序名称
-pub const NAME: &str = "寸止";
+pub const NAME: &str = vocabulary::APP_NAME_ZH;
 
 /// 应用程序英文名称
-pub const NAME_EN: &str = "cunzhi";
+pub const NAME_EN: &str = vocabulary::APP_NAME_EN;
 
 /// 应用程序描述
-pub const DESCRIPTION: &str = "智能代码审查工具";
+pub const DESCRIPTION: &str = vocabulary::APP_DESCRIPTION;
 
 /// 应用程序版本（从 Cargo.toml 获取）
 pub const VERSION: &str = env!("CARGO_PKG_VERSION");

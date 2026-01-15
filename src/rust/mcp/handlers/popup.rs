@@ -1,8 +1,9 @@
 use anyhow::Result;
-use std::process::Command;
 use std::fs;
 use std::path::Path;
+use std::process::Command;
 
+use crate::constants::vocabulary;
 use crate::mcp::types::PopupRequest;
 
 /// 创建 Tauri 弹窗
@@ -41,14 +42,16 @@ pub fn create_tauri_popup(request: &PopupRequest) -> Result<String> {
     }
 }
 
-/// 查找等一下 UI 命令的路径
+/// 查找 GUI UI 命令的路径
 ///
 /// 按优先级查找：同目录 -> 全局版本 -> 开发环境
 fn find_ui_command() -> Result<String> {
-    // 1. 优先尝试与当前 MCP 服务器同目录的等一下命令
+    let gui_name = vocabulary::EXECUTABLE_GUI;
+
+    // 1. 优先尝试与当前 MCP 服务器同目录的 GUI 命令
     if let Ok(current_exe) = std::env::current_exe() {
         if let Some(exe_dir) = current_exe.parent() {
-            let local_ui_path = exe_dir.join("等一下");
+            let local_ui_path = exe_dir.join(gui_name);
             if local_ui_path.exists() && is_executable(&local_ui_path) {
                 return Ok(local_ui_path.to_string_lossy().to_string());
             }
@@ -56,16 +59,18 @@ fn find_ui_command() -> Result<String> {
     }
 
     // 2. 尝试全局命令（最常见的部署方式）
-    if test_command_available("等一下") {
-        return Ok("等一下".to_string());
+    if test_command_available(gui_name) {
+        return Ok(gui_name.to_string());
     }
 
     // 3. 如果都找不到，返回详细错误信息
     anyhow::bail!(
-        "找不到等一下 UI 命令。请确保：\n\
-         1. 已编译项目：cargo build --release\n\
-         2. 或已全局安装：./install.sh\n\
-         3. 或等一下命令在同目录下"
+        "找不到 {} UI 命令。请确保：\n\
+        1. 已编译项目：cargo build --release\n\
+        2. 或已全局安装：./install.sh\n\
+        3. 或 {} 命令在同目录下",
+        gui_name,
+        gui_name
     )
 }
 

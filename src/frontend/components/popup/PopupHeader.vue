@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { appName } from 'virtual:vocabulary'
 import ThemeIcon from '../common/ThemeIcon.vue'
 
 interface Props {
@@ -45,7 +46,7 @@ function handleToggleAlwaysOnTop() {
       <div class="flex items-center gap-3">
         <div class="w-3 h-3 rounded-full bg-primary-500" />
         <h1 class="text-base font-medium text-white">
-          寸止 - 告别AI提前终止烦恼，助力AI更加持久
+          {{ appName }} - 告别AI提前终止烦恼，助力AI更加持久
         </h1>
       </div>
 

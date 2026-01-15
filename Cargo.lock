@@ -756,6 +756,7 @@ dependencies = [
  "teloxide",
  "thiserror 1.0.69",
  "tokio",
+ "toml",
  "uuid",
 ]
 

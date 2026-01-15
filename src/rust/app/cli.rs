@@ -1,8 +1,10 @@
-use crate::config::load_standalone_telegram_config;
-use crate::telegram::handle_telegram_only_mcp_request;
-use crate::log_important;
-use crate::app::builder::run_tauri_app;
 use anyhow::Result;
+
+use crate::app::builder::run_tauri_app;
+use crate::config::load_standalone_telegram_config;
+use crate::constants::vocabulary;
+use crate::log_important;
+use crate::telegram::handle_telegram_only_mcp_request;
 
 /// 处理命令行参数
 pub fn handle_cli_args() -> Result<()> {
@@ -70,16 +72,16 @@ fn handle_mcp_request(request_file: &str) -> Result<()> {
 
 /// 显示帮助信息
 fn print_help() {
-    println!("寸止 - 智能代码审查工具");
+    println!("{} - {}", vocabulary::APP_NAME_ZH, vocabulary::APP_DESCRIPTION);
     println!();
     println!("用法:");
-    println!("  等一下                    启动设置界面");
-    println!("  等一下 --mcp-request <文件>  处理 MCP 请求");
-    println!("  等一下 --help             显示此帮助信息");
-    println!("  等一下 --version          显示版本信息");
+    println!("  {}                    启动设置界面", vocabulary::EXECUTABLE_GUI);
+    println!("  {} --mcp-request <文件>  处理 MCP 请求", vocabulary::EXECUTABLE_GUI);
+    println!("  {} --help             显示此帮助信息", vocabulary::EXECUTABLE_GUI);
+    println!("  {} --version          显示版本信息", vocabulary::EXECUTABLE_GUI);
 }
 
 /// 显示版本信息
 fn print_version() {
-    println!("寸止 v{}", env!("CARGO_PKG_VERSION"));
+    println!("{} v{}", vocabulary::APP_NAME_ZH, env!("CARGO_PKG_VERSION"));
 }

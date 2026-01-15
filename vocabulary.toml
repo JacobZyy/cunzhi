@@ -1,0 +1,55 @@
+# 寸止项目核心词汇配置
+# 此文件定义了项目中使用的所有核心词汇，在构建时会被注入到代码中
+# 修改此文件后需要重新编译项目才能生效
+
+[app]
+# 应用程序名称（中文）
+name_zh = "论剑"
+# 应用程序名称（英文）
+name_en = "lunjian"
+# 应用程序描述
+description = "智能代码论剑工具"
+
+[executables]
+# GUI 主程序可执行文件名
+# 注意：修改后需要同步更新 Cargo.toml 中的 [[bin]] name
+gui_name = "且慢"
+# MCP 服务器可执行文件名
+# 注意：修改后需要同步更新 Cargo.toml 中的 [[bin]] name
+mcp_server_name = "论剑"
+
+[mcp_tools.interaction]
+# 交互工具 ID（用于 MCP 协议）
+id = "lunjian"
+# 交互工具名称（显示给用户）
+name = "论剑"
+# 交互工具描述
+description = "智能代码论剑工具，如华山论剑般切磋技艺，支持预设招式、自由出招和截图佐证"
+
+[mcp_tools.memory]
+# 记忆管理工具 ID（用于 MCP 协议）
+id = "xinfa"
+# 记忆管理工具名称（显示给用户）
+name = "心法管理"
+# 记忆管理工具描述
+description = "江湖心法管理工具，用于存储和管理重要的门派规矩、个人心得和武学秘籍"
+
+[mcp_tools.search]
+# 代码搜索工具 ID（用于 MCP 协议）
+id = "qinggong"
+# 代码搜索工具名称（显示给用户）
+name = "轻功搜索"
+# 代码搜索工具描述
+description = "基于内功在特定项目中搜索相关的代码心法，支持意念搜索和增量修炼"
+
+[actions]
+# 记忆管理操作 - 添加记忆
+memory_add = "修炼"
+# 记忆管理操作 - 回忆/检索记忆
+memory_recall = "回想"
+
+[mcp_config]
+# MCP 工具默认启用状态
+lunjian = true
+xinfa = false
+qinggong = false

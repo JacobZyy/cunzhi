@@ -10,6 +10,7 @@ use std::collections::HashMap;
 use super::tools::{InteractionTool, MemoryTool, AcemcpTool};
 use super::types::{ZhiRequest, JiyiRequest};
 use crate::config::load_standalone_config;
+use crate::constants::vocabulary;
 use crate::{log_important, log_debug};
 
 #[derive(Clone)]
@@ -109,15 +110,15 @@ impl ServerHandler for ZhiServer {
 
         if let serde_json::Value::Object(schema_map) = zhi_schema {
             tools.push(Tool {
-                name: Cow::Borrowed("zhi"),
-                description: Some(Cow::Borrowed("智能代码审查交互工具，支持预定义选项、自由文本输入和图片上传")),
+                name: Cow::Owned(vocabulary::TOOL_ID_INTERACTION.to_string()),
+                description: Some(Cow::Owned(vocabulary::TOOL_DESC_INTERACTION.to_string())),
                 input_schema: Arc::new(schema_map),
                 annotations: None,
             });
         }
 
         // 记忆管理工具 - 仅在启用时添加
-        if self.is_tool_enabled("ji") {
+        if self.is_tool_enabled(vocabulary::TOOL_ID_MEMORY) {
             let ji_schema = serde_json::json!({
                 "type": "object",
                 "properties": {
@@ -143,8 +144,8 @@ impl ServerHandler for ZhiServer {
 
             if let serde_json::Value::Object(schema_map) = ji_schema {
                 tools.push(Tool {
-                    name: Cow::Borrowed("ji"),
-                    description: Some(Cow::Borrowed("全局记忆管理工具，用于存储和管理重要的开发规范、用户偏好和最佳实践")),
+                    name: Cow::Owned(vocabulary::TOOL_ID_MEMORY.to_string()),
+                    description: Some(Cow::Owned(vocabulary::TOOL_DESC_MEMORY.to_string())),
                     input_schema: Arc::new(schema_map),
                     annotations: None,
                 });
@@ -152,7 +153,7 @@ impl ServerHandler for ZhiServer {
         }
 
         // 代码搜索工具 - 仅在启用时添加
-        if self.is_tool_enabled("sou") {
+        if self.is_tool_enabled(vocabulary::TOOL_ID_SEARCH) {
             tools.push(AcemcpTool::get_tool_definition());
         }
 
@@ -172,7 +173,7 @@ impl ServerHandler for ZhiServer {
         log_debug!("收到工具调用请求: {}", request.name);
 
         match request.name.as_ref() {
-            "zhi" => {
+            name if name == vocabulary::TOOL_ID_INTERACTION => {
                 // 解析请求参数
                 let arguments_value = request.arguments
                     .map(serde_json::Value::Object)
@@ -184,9 +185,9 @@ impl ServerHandler for ZhiServer {
                 // 调用寸止工具
                 InteractionTool::zhi(zhi_request).await
             }
-            "ji" => {
+            name if name == vocabulary::TOOL_ID_MEMORY => {
                 // 检查记忆管理工具是否启用
-                if !self.is_tool_enabled("ji") {
+                if !self.is_tool_enabled(vocabulary::TOOL_ID_MEMORY) {
                     return Err(McpError::internal_error(
                         "记忆管理工具已被禁用".to_string(),
                         None
@@ -204,9 +205,9 @@ impl ServerHandler for ZhiServer {
                 // 调用记忆工具
                 MemoryTool::jiyi(ji_request).await
             }
-            "sou" => {
+            name if name == vocabulary::TOOL_ID_SEARCH => {
                 // 检查代码搜索工具是否启用
-                if !self.is_tool_enabled("sou") {
+                if !self.is_tool_enabled(vocabulary::TOOL_ID_SEARCH) {
                     return Err(McpError::internal_error(
                         "代码搜索工具已被禁用".to_string(),
                         None

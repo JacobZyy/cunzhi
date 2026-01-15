@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { toolInteraction, toolMemory, toolSearch } from 'virtual:vocabulary'
 import { computed, onMounted, ref } from 'vue'
 import { useMcpToolsReactive } from '../../composables/useMcpTools'
 import { generateFullPrompt } from '../../constants/prompts'
@@ -10,7 +11,7 @@ const { mcpTools, loading: mcpLoading, loadMcpTools, enabledTools } = useMcpTool
 const promptContent = computed(() => {
   // 将后端数据格式转换为前端格式
   const frontendTools = mcpTools.value.map(tool => ({
-    id: tool.id === 'ji' ? 'memory' : tool.id, // 后端用ji，前端用memory
+    id: tool.id === toolMemory.id ? 'memory' : tool.id, // 后端用配置的ID，前端用memory兼容
     name: tool.name,
     description: tool.description,
     enabled: tool.enabled,
@@ -20,7 +21,7 @@ const promptContent = computed(() => {
     darkIconBg: tool.dark_icon_bg,
   })).filter((tool) => {
     // 只包含有提示词配置的工具
-    return tool.id === 'zhi' || tool.id === 'memory' || tool.id === 'sou'
+    return tool.id === toolInteraction.id || tool.id === 'memory' || tool.id === toolSearch.id
   })
 
   return generateFullPrompt(frontendTools)

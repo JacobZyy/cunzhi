@@ -1,13 +1,16 @@
 // MCP 工具相关常量
+// 核心词汇从 vocabulary.toml 配置文件生成
+
+use super::vocabulary;
 
 /// 寸止工具标识符
-pub const TOOL_ZHI: &str = "zhi";
+pub const TOOL_ZHI: &str = vocabulary::TOOL_ID_INTERACTION;
 
 /// 记忆管理工具标识符
-pub const TOOL_JI: &str = "ji";
+pub const TOOL_JI: &str = vocabulary::TOOL_ID_MEMORY;
 
 /// 代码搜索工具标识符
-pub const TOOL_SOU: &str = "sou";
+pub const TOOL_SOU: &str = vocabulary::TOOL_ID_SEARCH;
 
 /// 默认启用的工具列表
 pub const DEFAULT_ENABLED_TOOLS: &[&str] = &[TOOL_ZHI, TOOL_JI, TOOL_SOU];

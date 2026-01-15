@@ -78,3 +78,5 @@ scripts/
 *.exe
 *.md
 !ACEMCP.md
+!CORE_VOCABULARY_ANALYSIS.md
+!VOCABULARY.md
